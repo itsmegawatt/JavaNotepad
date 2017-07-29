@@ -28,10 +28,21 @@ public class Notepad extends JFrame implements ActionListener {
 		this.setMenuBar(this.menuBar);
 		this.menuBar.add(this.file); // adds the menu option to the menu
 		this.file.setLabel("File"); // Sets the label of the file menu option to "File"
+		// Adds the Open button to the file menu
 		this.openFile.setLabel("Open");
 		this.openFile.addActionListener(this); // add an action listener so we know when it's been clicked
-		this.openFile.setShortcut(new MenuShortcut(KeyEvent.VK_O, false)); //set a keyboard shortcut
+		this.openFile.setShortcut(new MenuShortcut(KeyEvent.VK_O, false)); //set a keyboard shortcut as C-o
 		this.file.add(this.openFile); // adds the file option to the menu
+		// Adds the save button to the file menu
+		this.saveFile.setLabel("Save"); // Gives the save button a label
+		this.saveFile.addActionListener(this); // Gives it an action listener
+		this.saveFile.setShortcut(new MenuShortcut(KeyEvent.VK_S, false)); // Keyboard shortcut of C-s
+		this.file.add(saveFile); //Adds the save button to the menu
+		// Adds the close option to the menu
+		this.close.setLabel("Close");
+		this.close.addActionListener(this);
+		this.close.setShortcut(new MenuShortcut(KeyEvent.VK_F4)); // Ctrl F4 closes menu
+		this.file.add(this.close);
 	}
 	
 }
