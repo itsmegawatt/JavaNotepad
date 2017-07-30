@@ -15,7 +15,10 @@ public class Notepad extends JFrame implements ActionListener {
 	private MenuItem close = new MenuItem();
 	
 	public Notepad() {
-		constructWindow();
+		this.setSize(950, 550); // set initial size of the window
+		this.setTitle("Java Notepad"); // set the title of the window
+		this.getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill automatically
+		setDefaultCloseOperation(EXIT_ON_CLOSE); // set the default close operation (exit when it gets closed)
 
 		constructMenuBar(); // Add menu bar to window
 		constructtextArea(); // Add Text Area to window
@@ -24,13 +27,6 @@ public class Notepad extends JFrame implements ActionListener {
 		constructopenMenuItem(); // add open menu item to file menu
 		constructsaveMenuItem(); // add save menu item to file menu
 		constructcloseMenuItem(); // add close menu item to file menu
-	}
-
-	private void constructWindow() {
-		this.setSize(950, 550); // set initial size of the window
-		this.setTitle("Java Notepad"); // set the title of the window
-		this.getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill automatically
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // set the default close operation (exit when it gets closed)
 	}
 
 	private void constructMenuBar() {
