@@ -103,17 +103,21 @@ public class Notepad extends JFrame implements ActionListener {
 	}
 
 	private void saveAction() {
-		JFileChooser save = new JFileChooser(); // Again open the file chooser
-		int option = save.showSaveDialog(this); // Similar to the open dialog but for saving
+		JFileChooser file = new JFileChooser(); // Again open the file chooser
+		int option = file.showSaveDialog(this); // Similar to the open dialog but for saving
 		if (option == JFileChooser.APPROVE_OPTION) {
 			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter(save.getSelectedFile().getPath()));
-				out.write(this.textArea.getText()); // Get the contents of the text area and add it to buffer
-				out.close(); // Close the file stream
+				saveFile(file);
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}
 		}
+	}
+
+	private void saveFile(JFileChooser file) throws IOException {
+		BufferedWriter out = new BufferedWriter(new FileWriter(file.getSelectedFile().getPath()));
+		out.write(this.textArea.getText()); // Get the contents of the text area and add it to buffer
+		out.close(); // Close the file stream
 	}
 
 	private void closeAction() {
