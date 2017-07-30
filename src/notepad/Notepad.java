@@ -13,7 +13,9 @@ public class Notepad extends JFrame implements ActionListener {
 	private MenuItem openFile = new MenuItem();
 	private MenuItem saveFile = new MenuItem();
 	private MenuItem close = new MenuItem();
-	
+	private Menu shortcuts = new Menu();
+	private MenuItem clearTextArea = new MenuItem();
+
 	public Notepad() {
 		this.setSize(950, 550); // set initial size of the window
 		this.setTitle("Java Notepad"); // set the title of the window
@@ -27,10 +29,14 @@ public class Notepad extends JFrame implements ActionListener {
 		constructopenMenuItem(); // add open menu item to file menu
 		constructsaveMenuItem(); // add save menu item to file menu
 		constructcloseMenuItem(); // add close menu item to file menu
+		
+		constructshortcutsMenu(); // Add the shortcuts menu to the menuBar
+		constructclearTextAreaMenuItem(); //Adds the clear button to shortcuts menu
 	}
 
 	private void constructMenuBar() {
 		this.setMenuBar(this.menuBar);
+		this.menuBar.setFont(new Font("Arial", Font.PLAIN, 16));
 	}
 
 	private void constructtextArea() {
@@ -40,7 +46,6 @@ public class Notepad extends JFrame implements ActionListener {
 
 	private void constructfileMenu() {
 		this.file.setLabel("File"); // Sets the label of the file menu option to "File"
-		this.file.setFont(new Font("Arial", Font.PLAIN, 16));
 		this.menuBar.add(this.file); // adds the menu option to the menu
 	}
 
@@ -64,6 +69,17 @@ public class Notepad extends JFrame implements ActionListener {
 		this.close.setShortcut(new MenuShortcut(KeyEvent.VK_F4)); // Ctrl F4 closes menu
 		this.file.add(close);
 	}
+
+	private void constructshortcutsMenu() {
+		this.shortcuts.setLabel("Shortcuts");
+		this.menuBar.add(this.shortcuts);
+	}
+	
+	private void constructclearTextAreaMenuItem() {
+		this.clearTextArea.setLabel("Clear");
+		this.clearTextArea.addActionListener(this);
+		this.shortcuts.add(clearTextArea);
+	}
 	
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == this.openFile)
@@ -72,6 +88,8 @@ public class Notepad extends JFrame implements ActionListener {
 			saveAction();
 		if (event.getSource() == this.close)
 			closeAction();
+		if (event.getSource() == this.clearTextArea)
+			textAreaClear();
 	}
 
 	private void openAction() {
