@@ -76,21 +76,30 @@ public class Notepad extends JFrame implements ActionListener {
 	}
 
 	private void openAction() {
-		JFileChooser open = new JFileChooser(); // Open up a file chooser to browse for a file to open
-		int option = open.showOpenDialog(this); // Get the option that the user selected which is approve or cancel
+		JFileChooser file = new JFileChooser(); // Open up a file chooser to browse for a file to open
+		int option = file.showOpenDialog(this); // Get the option that the user selected which is approve or cancel
 		if (option == JFileChooser.APPROVE_OPTION) {
-			this.textArea.setText(""); // Clear the text area before applying file contents
-			// Create a scanner to read the file
-			// open.getSelectedFile().getPath() will get the path to the file
+			textAreaClear();
 			try {
-				Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
-				while (scan.hasNext()) //while there's still something to read
-					this.textArea.append(scan.nextLine() + "\n"); // Append the line to TextArea
-				scan.close();
+				loadFile(file);
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}
 		}
+	}
+
+	private void loadFile(JFileChooser file) throws FileNotFoundException {
+		// Create a scanner to read the file		
+		// open.getSelectedFile().getPath() will get the path to the file
+		Scanner scan = new Scanner(new FileReader(file.getSelectedFile().getPath()));
+		while (scan.hasNext()) //while there's still something to read
+			this.textArea.append(scan.nextLine() + "\n"); // Append the line to TextArea
+		scan.close();
+	}
+
+	private void textAreaClear() {
+		this.textArea.selectAll();
+		this.textArea.setText(null); // Clear the text area before applying file contents
 	}
 
 	private void saveAction() {
@@ -106,7 +115,6 @@ public class Notepad extends JFrame implements ActionListener {
 			}
 		}
 	}
-
 
 	private void closeAction() {
 		this.dispose(); // Frees up all resources and closes program
