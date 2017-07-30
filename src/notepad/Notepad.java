@@ -15,64 +15,67 @@ public class Notepad extends JFrame implements ActionListener {
 	private MenuItem close = new MenuItem();
 	
 	public Notepad() {
+		constructWindow();
+
+		constructMenuBar(); // Add menu bar to window
+		constructtextArea(); // Add Text Area to window
+
+		constructfileMenu(); // Add fileMenu to the menuBar
+		constructopenMenuItem(); // add open menu item to file menu
+		constructsaveMenuItem(); // add save menu item to file menu
+		constructcloseMenuItem(); // add close menu item to file menu
+	}
+
+	private void constructWindow() {
 		this.setSize(950, 550); // set initial size of the window
 		this.setTitle("Java Notepad"); // set the title of the window
 		this.getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill automatically
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // set the default close operation (exit when it gets closed)
-
-		menuBarConstructor(); // Add menu bar to window
-		textAreaConstructor(); // Add Text Area to window
-
-		fileMenuConstructor(); // Add fileMenu to the menuBar
-		openConstructor(); // add open menu item to file menu
-		saveConstructor(); // add save menu item to file menu
-		closeConstructor(); // add close menu item to file menu
 	}
 
-	private void menuBarConstructor() {
+	private void constructMenuBar() {
 		this.setMenuBar(this.menuBar);
 	}
 
-	private void textAreaConstructor() {
+	private void constructtextArea() {
 		this.getContentPane().add(textArea);
 		this.textArea.setFont(new Font("Century Gothic", Font.BOLD, 16)); // sets a default font for the text area
 	}
 
-	private void fileMenuConstructor() {
+	private void constructfileMenu() {
 		this.file.setLabel("File"); // Sets the label of the file menu option to "File"
 		this.file.setFont(new Font("Arial", Font.PLAIN, 16));
 		this.menuBar.add(this.file); // adds the menu option to the menu
 	}
 
-	private void openConstructor() {
+	private void constructopenMenuItem() {
 		this.openFile.setLabel("Open");
 		this.openFile.addActionListener(this); // add an action listener so we know when it's been clicked
 		this.openFile.setShortcut(new MenuShortcut(KeyEvent.VK_O, false)); //set a keyboard shortcut as C-o
 		this.file.add(this.openFile); // adds the file option to the menu
 	}
 
-	private void saveConstructor() {
+	private void constructsaveMenuItem() {
 		this.saveFile.setLabel("Save"); // Gives the save button a label
 		this.saveFile.addActionListener(this); // Gives it an action listener
 		this.saveFile.setShortcut(new MenuShortcut(KeyEvent.VK_S, false)); // Keyboard shortcut of C-s
 		this.file.add(saveFile); //Adds the save button to the menu
 	}
 
-	private void closeConstructor() {
+	private void constructcloseMenuItem() {
 		this.close.setLabel("Close");
 		this.close.addActionListener(this);
 		this.close.setShortcut(new MenuShortcut(KeyEvent.VK_F4)); // Ctrl F4 closes menu
 		this.file.add(close);
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.openFile)
+	public void actionPerformed(ActionEvent event) {
+		if (event.getSource() == this.openFile)
 			openAction();
-		if (e.getSource() == this.saveFile)
+		if (event.getSource() == this.saveFile)
 			saveAction();
-		if (e.getSource() == this.close)
+		if (event.getSource() == this.close)
 			closeAction();
-		
 	}
 
 	private void openAction() {
