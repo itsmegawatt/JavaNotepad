@@ -42,7 +42,54 @@ public class Notepad extends JFrame implements ActionListener {
 		this.close.setLabel("Close");
 		this.close.addActionListener(this);
 		this.close.setShortcut(new MenuShortcut(KeyEvent.VK_F4)); // Ctrl F4 closes menu
-		this.file.add(this.close);
+		this.file.add(close);
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		// If the source of the event was the "close" option
+		if (e.getSource() == this.close)
+			this.dispose(); // Frees up all resources and closes program
+		
+		// If the source was the "open" option
+		if (e.getSource() == this.openFile) {
+			JFileChooser open = new JFileChooser(); // Open up a file chooser to browse for a file to open
+			
+			int option = open.showOpenDialog(this); // Get the option that the user selected which is approve or cancel
+			
+			if (option == JFileChooser.APPROVE_OPTION) {
+				this.textArea.setText(""); // Clear the text area before applying file contents
+				// Create a scanner to read the file
+				// open.getSelectedFile().getPath() will get the path to the file
+				try {
+					Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
+					while (scan.hasNext()) //while there's still something to read
+						this.textArea.append(scan.nextLine() + "\n"); // Append the line to TextArea
+				} catch (Exception ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+			
+		} else if (e.getSource() == this.saveFile) {  // Lastly if the source of the event was the "save" option
+			JFileChooser save = new JFileChooser(); // Again open the file chooser
+			
+			int option = save.showSaveDialog(this); // Similar to the open dialog but for saving
+			
+			if (option == JFileChooser.APPROVE_OPTION) {
+				try {
+					BufferedWriter out = new BufferedWriter(new FileWriter(save.getSelectedFile().getPath()));
+					out.write(this.textArea.getText()); // Get the contents of the text area and add it to buffer
+					out.close(); // Close the file stream
+				} catch (Exception ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		Notepad app = new Notepad();
+		app.setVisible(true);
+	}
+	
 	
 }
