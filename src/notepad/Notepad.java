@@ -17,28 +17,48 @@ public class Notepad extends JFrame implements ActionListener {
 	public Notepad() {
 		this.setSize(950, 550); // set initial size of the window
 		this.setTitle("Java Notepad"); // set the title of the window
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // set the default close operation (exit when it gets closed)
-		this.textArea.setFont(new Font("Century Gothic", Font.BOLD, 16)); // sets a default font for the text area
-
-		// Add textArea to the content pane
 		this.getContentPane().setLayout(new BorderLayout()); // the BorderLayout bit makes it fill automatically
-		this.getContentPane().add(textArea);
-		// Add our menu bar to the GUI
+		setDefaultCloseOperation(EXIT_ON_CLOSE); // set the default close operation (exit when it gets closed)
+
+		menuBarConstructor(); // Add menu bar to window
+		textAreaConstructor(); // Add Text Area to window
+
+		fileMenuConstructor(); // Add fileMenu to the menuBar
+		openConstructor(); // add open menu item to file menu
+		saveConstructor(); // add save menu item to file menu
+		closeConstructor(); // add close menu item to file menu
+	}
+
+	private void menuBarConstructor() {
 		this.setMenuBar(this.menuBar);
-		this.menuBar.add(this.file); // adds the menu option to the menu
+	}
+
+	private void textAreaConstructor() {
+		this.getContentPane().add(textArea);
+		this.textArea.setFont(new Font("Century Gothic", Font.BOLD, 16)); // sets a default font for the text area
+	}
+
+	private void fileMenuConstructor() {
 		this.file.setLabel("File"); // Sets the label of the file menu option to "File"
 		this.file.setFont(new Font("Arial", Font.PLAIN, 16));
-		// Adds the Open button to the file menu
+		this.menuBar.add(this.file); // adds the menu option to the menu
+	}
+
+	private void openConstructor() {
 		this.openFile.setLabel("Open");
 		this.openFile.addActionListener(this); // add an action listener so we know when it's been clicked
 		this.openFile.setShortcut(new MenuShortcut(KeyEvent.VK_O, false)); //set a keyboard shortcut as C-o
 		this.file.add(this.openFile); // adds the file option to the menu
-		// Adds the save button to the file menu
+	}
+
+	private void saveConstructor() {
 		this.saveFile.setLabel("Save"); // Gives the save button a label
 		this.saveFile.addActionListener(this); // Gives it an action listener
 		this.saveFile.setShortcut(new MenuShortcut(KeyEvent.VK_S, false)); // Keyboard shortcut of C-s
 		this.file.add(saveFile); //Adds the save button to the menu
-		// Adds the close option to the menu
+	}
+
+	private void closeConstructor() {
 		this.close.setLabel("Close");
 		this.close.addActionListener(this);
 		this.close.setShortcut(new MenuShortcut(KeyEvent.VK_F4)); // Ctrl F4 closes menu
@@ -51,7 +71,7 @@ public class Notepad extends JFrame implements ActionListener {
 		if (e.getSource() == this.saveFile)
 			saveAction();
 		if (e.getSource() == this.close)
-		 closeAction();
+			closeAction();
 		
 	}
 
@@ -66,6 +86,7 @@ public class Notepad extends JFrame implements ActionListener {
 				Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
 				while (scan.hasNext()) //while there's still something to read
 					this.textArea.append(scan.nextLine() + "\n"); // Append the line to TextArea
+				scan.close();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}
